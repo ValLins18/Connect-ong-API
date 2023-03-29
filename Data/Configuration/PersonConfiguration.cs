@@ -16,7 +16,7 @@ namespace Connect_ong_API.Data.Configuration {
             builder.Property(builder => builder.AdressId).HasColumnName(nameof(Person.AdressId)).IsRequired();
             builder.Property(builder => builder.CpfCnpj).HasColumnName(nameof(Person.CpfCnpj)).IsRequired();
             builder.Property(builder => builder.Email).HasColumnName(nameof(Person.Email)).IsRequired(false);
-            builder.Property(builder => builder.ImgPath).HasColumnName(nameof(Person.ImgPath)).IsRequired();
+            builder.Property(builder => builder.ImgPath).HasColumnName(nameof(Person.ImgPath)).IsRequired(false);
             builder.Property(builder => builder.PhoneId).HasColumnName(nameof(Person.PhoneId)).IsRequired();
         }
     }

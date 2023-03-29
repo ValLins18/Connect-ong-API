@@ -1,12 +1,13 @@
 ﻿using Connect_ong_API.Core.Models;
+using Connect_ong_API.Core.ViewModels;
 
 namespace Connect_ong_API.Data.Repository.Interface {
     public interface IAddressRepository {
 
-        Task<Address> GetAddressByIdAsync(int id);
-        Task<IEnumerable<Address>> GetAllAddressesAsync();
-        Task<Address> PostAdressAsync(Address address);
-        Task<Address> PutAddressAsync(Address address);
-        Task<Address> DeleteAddressAsync(int id);
+        public Task<Address> GetAddressByIdAsync(int id);
+        public Task<IEnumerable<Address>> GetAllAddressesAsync();
+        public Task<AddressPostView> PostAdressAsync(AddressPostView address);
+        public Task<AddressPutView> PutAddressAsync(int id, AddressPutView address);
+        public Task<Address> DeleteAddressAsync(int id);
     }
 }

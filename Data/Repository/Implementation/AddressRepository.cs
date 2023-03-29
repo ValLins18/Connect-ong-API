@@ -1,4 +1,5 @@
 ﻿using Connect_ong_API.Core.Models;
+using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -27,16 +28,34 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Addresses.ToListAsync();
         }
 
-        public async Task<Address> PostAdressAsync(Address address) {
-            _ = await _context.AddAsync(address);
-            _context.SaveChanges();
+        public async Task<AddressPostView> PostAdressAsync(AddressPostView address) {
+            Address address1 = new Address {
+                Street = address.Street,
+                City = address.City,
+                Neighborhood = address.Neighborhood,
+                Number = address.Number,
+                State = address.State,
+                ZipCode = address.ZipCode
+            };
+            _ = await _context.AddAsync(address1);
+            _ = await _context.SaveChangesAsync();
             return address;
         }
 
-        public async Task<Address> PutAddressAsync(Address address) {
-            _context.Addresses.Update(address);
+        public async Task<AddressPutView> PutAddressAsync(int id, AddressPutView address) {
+            Address address1 = new Address {
+                AddressId= id,
+                Street = address.Street,
+                City = address.City,
+                ZipCode = address.ZipCode,
+                State = address.State,
+                Neighborhood = address.Neighborhood,
+                Number = address.Number
+            };
+            _context.Addresses.Update(address1);
             await _context.SaveChangesAsync();
             return address;
         }
+
     }
 }
