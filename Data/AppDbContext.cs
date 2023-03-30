@@ -11,7 +11,6 @@ namespace Connect_ong_API.Data {
         public DbSet<Adoption> Adoptions { get; set; }
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Donate> Donates { get; set; }
-        public DbSet<Ong> Ongs { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Phone> Phones { get; set; }
 
@@ -21,7 +20,6 @@ namespace Connect_ong_API.Data {
             modelBuilder.ApplyConfiguration(new AdoptionConfiguration());
             modelBuilder.ApplyConfiguration(new AnimalConfiguration());
             modelBuilder.ApplyConfiguration(new DonateConfiguration());
-            modelBuilder.ApplyConfiguration(new OngConfiguration());
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new PhoneConfiguration());
         }

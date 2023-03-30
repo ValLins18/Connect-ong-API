@@ -1,3 +1,5 @@
+using AutoMapper;
+using Connect_ong_API.Core.MapConfiguration;
 using Connect_ong_API.Data;
 using Connect_ong_API.Data.Repository.Implementation;
 using Connect_ong_API.Data.Repository.Interface;
@@ -14,6 +16,11 @@ builder.Services.AddSqlServer<AppDbContext>(builder.Configuration.GetConnectionS
 
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IPhoneRepository, PhoneRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
+IMapper mapper = MapConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

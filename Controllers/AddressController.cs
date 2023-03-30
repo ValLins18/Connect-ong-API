@@ -59,7 +59,7 @@ namespace Connect_ong_API.Controllers {
                 await _addressRepository.DeleteAddressAsync(id); return Accepted(new {Deleted = true});
             }
             catch (Exception e) {
-                return BadRequest("Não foi possivel encontrar o endereço");
+                return BadRequest("Não foi possivel encontrar o endereço"+e);
             }
         }
     }

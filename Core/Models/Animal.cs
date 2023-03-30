@@ -11,7 +11,7 @@
         public bool castred { get; set; }
         public bool available { get; set; }
 
-        public int OngId { get; set; }
-        public virtual Ong Ong { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person Ong { get; set; }
     }
 }

@@ -15,6 +15,6 @@
         public int PhoneId { get; set; }
         public virtual Phone Phone { get; set; }
 
-        public IList<Animal> Animals { get; set; }
+        public IList<Animal>? Animals { get; set; }
     }
 }
