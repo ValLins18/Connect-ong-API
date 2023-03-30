@@ -10,7 +10,7 @@ namespace Connect_ong_API.Controllers {
     [ApiController]
     public class AddressController : ControllerBase {
 
-        IAddressRepository _addressRepository;
+        private readonly IAddressRepository _addressRepository;
 
         public AddressController(IAddressRepository addressRepository) {
             _addressRepository = addressRepository;

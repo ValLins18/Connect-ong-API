@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<AppDbContext>(builder.Configuration.GetConnectionString("connect-ong"));
 
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IPhoneRepository, PhoneRepository>();
 
 var app = builder.Build();
 

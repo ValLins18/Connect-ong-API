@@ -1,4 +1,5 @@
 ﻿using Connect_ong_API.Core.Models;
+using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,16 +26,25 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Phones.ToListAsync();
         }
 
-        public async Task<Phone> PostPhoneAsync(Phone Phone) {
-            _ = await _context.AddAsync(Phone);
+        public async Task<PhoneRequestView> PostPhoneAsync(PhoneRequestView phoneRequest) {
+            Phone phone = new Phone {
+                DDD = phoneRequest.DDD,
+                PhoneNumber = phoneRequest.PhoneNumber
+            };
+            _ = await _context.AddAsync(phone);
             _context.SaveChanges();
-            return Phone;
+            return phoneRequest;
         }
 
-        public async Task<Phone> PutPhoneAsync(Phone Phone) {
-            _context.Phones.Update(Phone);
+        public async Task<PhoneRequestView> PutPhoneAsync(int id, PhoneRequestView phoneRequest) {
+            Phone phone = new Phone {
+                PhoneId = id,
+                DDD = phoneRequest.DDD,
+                PhoneNumber = phoneRequest.PhoneNumber
+            };
+            _context.Phones.Update(phone);
             await _context.SaveChangesAsync();
-            return Phone;
+            return phoneRequest;
         }
     }
 }
