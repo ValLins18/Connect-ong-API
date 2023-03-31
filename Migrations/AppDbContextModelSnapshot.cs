@@ -140,13 +140,13 @@ namespace Connect_ong_API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Specie");
 
-                    b.Property<bool>("available")
+                    b.Property<bool>("Available")
                         .HasColumnType("bit")
-                        .HasColumnName("available");
+                        .HasColumnName("Available");
 
-                    b.Property<bool>("castred")
+                    b.Property<bool>("Castred")
                         .HasColumnType("bit")
-                        .HasColumnName("castred");
+                        .HasColumnName("Castred");
 
                     b.HasKey("AnimalId");
 

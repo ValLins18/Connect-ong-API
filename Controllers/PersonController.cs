@@ -31,6 +31,15 @@ namespace Connect_ong_API.Controllers {
             return Ok(person);
         }
 
+        [HttpGet("cpfcnpj/{cpfcnpj}")]
+        public async Task<IActionResult> GetPersonByCpfCnpj(string cpfcnpj) {
+            Person person = await _personRepository.GetPersonsByCpfCnpjAsync(cpfcnpj);
+            if (person == null) {
+                return NotFound();
+            }
+            return Ok(person);
+        }
+
         // POST api/<PersonController>
         [HttpPost]
         public async Task<IActionResult> CreatePerson([FromBody] PersonRequestView personRequest) {
@@ -64,12 +73,12 @@ namespace Connect_ong_API.Controllers {
         // DELETE api/<PersonController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePerson(int id) {
-            Person person = _personRepository.GetPersonByIdAsync(id).Result;
+            Person person = await _personRepository.GetPersonByIdAsync(id);
             if (person == null) {
                 return NotFound();
             }
             try {
-                _ = _personRepository.DeletePersonAsync(id);
+                _ = await _personRepository.DeletePersonAsync(id);
                 return Accepted(new { deleted = true });
             }
             catch (Exception) {

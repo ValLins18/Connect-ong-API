@@ -137,8 +137,8 @@ namespace Connect_ong_API.Migrations
                     Specie = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Breed = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RecueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    castred = table.Column<bool>(type: "bit", nullable: false),
-                    available = table.Column<bool>(type: "bit", nullable: false),
+                    Castred = table.Column<bool>(type: "bit", nullable: false),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
                     OngId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

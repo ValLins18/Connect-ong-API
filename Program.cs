@@ -17,6 +17,7 @@ builder.Services.AddSqlServer<AppDbContext>(builder.Configuration.GetConnectionS
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IPhoneRepository, PhoneRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 
 IMapper mapper = MapConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);

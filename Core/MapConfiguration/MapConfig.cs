@@ -10,6 +10,9 @@ namespace Connect_ong_API.Core.MapConfiguration {
             var mappingConfig = new MapperConfiguration(c => {
                 c.CreateMap<PersonRequestView, Person>();
                 c.CreateMap<Person, PersonRequestView> ();
+
+                c.CreateMap<Animal, AnimalRequestView>();
+                c.CreateMap<AnimalRequestView, Animal> ();
             });
             return mappingConfig;
         }
