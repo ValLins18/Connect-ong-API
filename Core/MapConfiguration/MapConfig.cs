@@ -13,6 +13,9 @@ namespace Connect_ong_API.Core.MapConfiguration {
 
                 c.CreateMap<Animal, AnimalRequestView>();
                 c.CreateMap<AnimalRequestView, Animal> ();
+
+                c.CreateMap<Donate, DonateRequestView>();
+                c.CreateMap<DonateRequestView, Donate>();
             });
             return mappingConfig;
         }
