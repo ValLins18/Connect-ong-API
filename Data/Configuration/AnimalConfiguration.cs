@@ -15,7 +15,7 @@ namespace Connect_ong_API.Data.Configuration {
             builder.Property(builder => builder.Specie).HasColumnName(nameof(Animal.Specie)).IsRequired();
             builder.Property(builder => builder.Castred).HasColumnName(nameof(Animal.Castred)).IsRequired();
             builder.Property(builder => builder.Breed).HasColumnName(nameof(Animal.Breed)).IsRequired();
-            builder.Property(builder => builder.RecueDate).HasColumnName(nameof(Animal.RecueDate)).IsRequired();
+            builder.Property(builder => builder.RescueDate).HasColumnName(nameof(Animal.RescueDate)).IsRequired();
             builder.Property(builder => builder.Available).HasColumnName(nameof(Animal.Available)).IsRequired();
             builder.Property(builder => builder.ImgPath).HasColumnName(nameof(Animal.ImgPath)).IsRequired(false);
             builder.Property(builder => builder.PersonId).HasColumnName(nameof(Animal.PersonId)).IsRequired();
