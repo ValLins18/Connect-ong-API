@@ -5,8 +5,8 @@ namespace Connect_ong_API.Data.Repository.Interface {
     public interface IDonateRepository {
         Task<Donate> GetDonateByIdAsync(int id);
         Task<IEnumerable<Donate>> GetAllDonatesAsync();
-        Task<DonateRequestView> PostDonateAsync(DonateRequestView donateRequest);
-        Task<DonateRequestView> PutDonateAsync(int id, DonateRequestView donateRequest);
+        Task<Donate> PostDonateAsync(Donate donate);
+        Task<Donate> PutDonateAsync(int id, Donate donate);
         Task<Donate> DeleteDonateAsync(int id);
     }
 }

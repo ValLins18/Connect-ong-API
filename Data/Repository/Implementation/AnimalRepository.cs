@@ -38,19 +38,17 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return animals;
         }
 
-        public async Task<AnimalRequestView> PostAnimalAsync(AnimalRequestView animalRequest) {
-            Animal animal = _mapper.Map<Animal>(animalRequest);
+        public async Task<Animal> PostAnimalAsync(Animal animal) {
             _context.Add(animal);
             await _context.SaveChangesAsync();
-            return animalRequest;
+            return animal;
         }
 
-        public async Task<AnimalRequestView> PutAnimalAsync(int id, AnimalRequestView animalRequest) {
-            Animal animal = _mapper.Map<Animal>(animalRequest);
-            animal.AnimalId= id;
+        public async Task<Animal> PutAnimalAsync(int id, Animal animal) {
+            animal.AnimalId = id;
             _context.Update(animal);
             await _context.SaveChangesAsync();
-            return animalRequest;
+            return animal;
         }
     }
 }

@@ -28,31 +28,15 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Addresses.ToListAsync();
         }
 
-        public async Task<AddressPostView> PostAdressAsync(AddressPostView address) {
-            Address address1 = new Address {
-                Street = address.Street,
-                City = address.City,
-                Neighborhood = address.Neighborhood,
-                Number = address.Number,
-                State = address.State,
-                ZipCode = address.ZipCode
-            };
-            _ = await _context.AddAsync(address1);
-            _ = await _context.SaveChangesAsync();
+        public async Task<Address> PostAdressAsync(Address address) {
+            await _context.AddAsync(address);
+            await _context.SaveChangesAsync();
             return address;
         }
 
-        public async Task<AddressPutView> PutAddressAsync(int id, AddressPutView address) {
-            Address address1 = new Address {
-                AddressId= id,
-                Street = address.Street,
-                City = address.City,
-                ZipCode = address.ZipCode,
-                State = address.State,
-                Neighborhood = address.Neighborhood,
-                Number = address.Number
-            };
-            _context.Addresses.Update(address1);
+        public async Task<Address> PutAddressAsync(int id, Address address) {
+            address.AddressId = id;
+            _context.Addresses.Update(address);
             await _context.SaveChangesAsync();
             return address;
         }

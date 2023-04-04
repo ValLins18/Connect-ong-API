@@ -6,8 +6,8 @@ namespace Connect_ong_API.Data.Repository.Interface {
         Task<Animal> GetAnimalByIdAsync(int id);
         Task<IEnumerable<Animal>> GetAllAnimalsAsync();
         Task<IEnumerable<Animal>> GetAnimalsByCpfCnpjAsync(string cpfCnpj);
-        Task<AnimalRequestView> PostAnimalAsync(AnimalRequestView animalRequest);
-        Task<AnimalRequestView> PutAnimalAsync(int id, AnimalRequestView animalRequest);
+        Task<Animal> PostAnimalAsync(Animal animal);
+        Task<Animal> PutAnimalAsync(int id, Animal animal);
         Task<Animal> DeleteAnimalAsync(int id);
 
     }

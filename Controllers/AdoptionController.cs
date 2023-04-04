@@ -1,4 +1,5 @@
-﻿using Connect_ong_API.Core.Models;
+﻿using AutoMapper;
+using Connect_ong_API.Core.Models;
 using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace Connect_ong_API.Controllers {
     public class AdoptionController : ControllerBase {
 
         private readonly IAdoptionRepository _adoptionRepository;
+        private readonly IMapper _mapper;
 
-        public AdoptionController(IAdoptionRepository adoptionRepository) {
+        public AdoptionController(IAdoptionRepository adoptionRepository, IMapper mapper) {
             _adoptionRepository = adoptionRepository;
+            _mapper = mapper;
         }
 
 
@@ -27,7 +30,7 @@ namespace Connect_ong_API.Controllers {
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdoptionById(int id) {
             Adoption adoption = await _adoptionRepository.GetAdoptionByIdAsync(id);
-            if(adoption == null) {
+            if (adoption == null) {
                 return NotFound("Adoção inexistente");
             }
             return Ok(adoption);
@@ -36,12 +39,14 @@ namespace Connect_ong_API.Controllers {
         // POST api/<AdoptionController>
         [HttpPost]
         public async Task<IActionResult> CreateAdoption([FromBody] AdoptionRequestView adoptionRequest) {
-            if (adoptionRequest == null) {
-                return BadRequest();
+            adoptionRequest.Validate();
+            if (!adoptionRequest.IsValid) {
+                return BadRequest(adoptionRequest.Notifications);
             }
             try {
-                await _adoptionRepository.PostAdoptionAsync(adoptionRequest);
-                return Created("", adoptionRequest);
+                Adoption adoption = _mapper.Map<Adoption>(adoptionRequest);
+                await _adoptionRepository.PostAdoptionAsync(adoption);
+                return Created(nameof(AdoptionController), adoption);
             }
             catch (Exception e) {
                 return BadRequest(e.Message);
@@ -51,11 +56,13 @@ namespace Connect_ong_API.Controllers {
         // PUT api/<AdoptionController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAdoption(int id, [FromBody] AdoptionRequestView adoptionRequest) {
-            if (adoptionRequest == null) {
-                return BadRequest();
+            adoptionRequest.Validate();
+            if (!adoptionRequest.IsValid) {
+                return BadRequest(adoptionRequest.Notifications);
             }
             try {
-                await _adoptionRepository.PutAdoptionAsync(id, adoptionRequest);
+                Adoption adoption = _mapper.Map<Adoption>(adoptionRequest);
+                await _adoptionRepository.PutAdoptionAsync(id, adoption);
                 return NoContent();
             }
             catch (Exception e) {
@@ -72,7 +79,7 @@ namespace Connect_ong_API.Controllers {
             }
             try {
                 await _adoptionRepository.DeleteAdoptionAsync(id);
-                return Accepted(new {Deleted = true});
+                return Accepted(new { Deleted = true });
             }
             catch (Exception e) {
                 return BadRequest(e.Message);

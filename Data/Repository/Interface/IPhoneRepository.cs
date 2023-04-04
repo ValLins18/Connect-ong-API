@@ -5,8 +5,8 @@ namespace Connect_ong_API.Data.Repository.Interface {
     public interface IPhoneRepository {
         Task<Phone> GetPhoneByIdAsync(int id);
         Task<IEnumerable<Phone>> GetAllPhonesAsync();
-        Task<PhoneRequestView> PostPhoneAsync(PhoneRequestView phoneRequest);
-        Task<PhoneRequestView> PutPhoneAsync(int id, PhoneRequestView phoneRequest);
+        Task<Phone> PostPhoneAsync(Phone phone);
+        Task<Phone> PutPhoneAsync(int id, Phone phone);
         Task<Phone> DeletePhoneAsync(int id);
     }
 }

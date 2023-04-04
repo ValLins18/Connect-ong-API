@@ -29,19 +29,17 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Adoptions.ToListAsync();
         }
 
-        public async Task<AdoptionRequestView> PostAdoptionAsync(AdoptionRequestView adoptionRequest) {
-            Adoption adoption = _mapper.Map<Adoption>(adoptionRequest);
+        public async Task<Adoption> PostAdoptionAsync(Adoption adoption) {
             _context.Add(adoption);
             await _context.SaveChangesAsync();
-            return adoptionRequest;
+            return adoption;
         }
 
-        public async Task<AdoptionRequestView> PutAdoptionAsync(int id, AdoptionRequestView adoptionRequest) {
-            Adoption adoption = _mapper.Map<Adoption>(adoptionRequest);
+        public async Task<Adoption> PutAdoptionAsync(int id, Adoption adoption) {
             _context.Update(adoption);
             adoption.AdoptionId = id;
             await _context.SaveChangesAsync();
-            return adoptionRequest;
+            return adoption;
         }
     }
 }

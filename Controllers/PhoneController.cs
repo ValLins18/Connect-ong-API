@@ -1,4 +1,5 @@
-﻿using Connect_ong_API.Core.Models;
+﻿using AutoMapper;
+using Connect_ong_API.Core.Models;
 using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace Connect_ong_API.Controllers {
     public class PhoneController : ControllerBase {
 
         private readonly IPhoneRepository _phoneRepository;
+        private readonly IMapper _mapper;
 
-        public PhoneController(IPhoneRepository phoneRepository) {
+        public PhoneController(IPhoneRepository phoneRepository, IMapper mapper) {
             _phoneRepository = phoneRepository;
+            _mapper = mapper;
         }
 
 
@@ -36,12 +39,13 @@ namespace Connect_ong_API.Controllers {
         // POST api/<PhoneController>
         [HttpPost]
         public async Task<IActionResult> CreatePhone([FromBody] PhoneRequestView phoneRequest) {
-            if (phoneRequest == null) {
-                return BadRequest();
+            phoneRequest.Validate();
+            if(!phoneRequest.IsValid) { 
+                return BadRequest(phoneRequest.Notifications);
             }
             try {
-                await _phoneRepository.PostPhoneAsync(phoneRequest);
-                return Created(nameof(AddressController), phoneRequest);
+                Phone phone = _mapper.Map<Phone>(phoneRequest);
+                return Created(nameof(AddressController), await _phoneRepository.PostPhoneAsync(phone));
             } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }
@@ -51,7 +55,8 @@ namespace Connect_ong_API.Controllers {
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePhone(int id, [FromBody] PhoneRequestView phoneRequest) {
             try {
-                await _phoneRepository.PutPhoneAsync(id, phoneRequest);
+                Phone phone = _mapper.Map<Phone>(phoneRequest);
+                await _phoneRepository.PutPhoneAsync(id, phone);
                 return NoContent();
             } catch (Exception ex) {
                 return BadRequest(ex.Message);

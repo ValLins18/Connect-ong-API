@@ -26,25 +26,17 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Phones.ToListAsync();
         }
 
-        public async Task<PhoneRequestView> PostPhoneAsync(PhoneRequestView phoneRequest) {
-            Phone phone = new Phone {
-                DDD = phoneRequest.DDD,
-                PhoneNumber = phoneRequest.PhoneNumber
-            };
-            _ = await _context.AddAsync(phone);
+        public async Task<Phone> PostPhoneAsync(Phone phone) {
+            await _context.AddAsync(phone);
             _context.SaveChanges();
-            return phoneRequest;
+            return phone;
         }
 
-        public async Task<PhoneRequestView> PutPhoneAsync(int id, PhoneRequestView phoneRequest) {
-            Phone phone = new Phone {
-                PhoneId = id,
-                DDD = phoneRequest.DDD,
-                PhoneNumber = phoneRequest.PhoneNumber
-            };
+        public async Task<Phone> PutPhoneAsync(int id, Phone phone) {
+            phone.PhoneId = id;
             _context.Phones.Update(phone);
             await _context.SaveChangesAsync();
-            return phoneRequest;
+            return phone;
         }
     }
 }

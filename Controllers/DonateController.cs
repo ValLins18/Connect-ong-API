@@ -1,4 +1,5 @@
-﻿using Connect_ong_API.Core.Models;
+﻿using AutoMapper;
+using Connect_ong_API.Core.Models;
 using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace Connect_ong_API.Controllers {
     public class DonateController : ControllerBase {
 
         private readonly IDonateRepository _donateRepository;
+        private readonly IMapper _mapper;
 
-        public DonateController(IDonateRepository donateRepository) {
+        public DonateController(IDonateRepository donateRepository, IMapper mapper) {
             _donateRepository = donateRepository;
+            _mapper = mapper;
         }
 
         // GET: api/<DonateController>
@@ -35,12 +38,13 @@ namespace Connect_ong_API.Controllers {
         // POST api/<DonateController>
         [HttpPost]
         public async Task<IActionResult> CreateDonate([FromBody] DonateRequestView donateRequest) {
-            if(donateRequest == null) {
-                return BadRequest();
+            donateRequest.Validate();
+            if(!donateRequest.IsValid) {
+                return BadRequest(donateRequest.Notifications);
             }
             try {
-                await _donateRepository.PostDonateAsync(donateRequest);
-                return Created("", donateRequest);
+                Donate donate = _mapper.Map<Donate>(donateRequest);
+                return Created(nameof(DonateController), await _donateRepository.PostDonateAsync(donate));
             }
             catch (Exception e) {
                 return BadRequest(e.Message);
@@ -50,11 +54,13 @@ namespace Connect_ong_API.Controllers {
         // PUT api/<DonateController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDonate(int id, DonateRequestView donateRequest) {
-            if (donateRequest == null) {
-                return BadRequest();
+            donateRequest.Validate();
+            if (!donateRequest.IsValid) {
+                return BadRequest(donateRequest.Notifications);
             }
             try {
-                await _donateRepository.PutDonateAsync(id, donateRequest);
+                Donate donate = _mapper.Map<Donate>(donateRequest);
+                await _donateRepository.PutDonateAsync(id, donate);
                 return NoContent();
             }
             catch (Exception e) {

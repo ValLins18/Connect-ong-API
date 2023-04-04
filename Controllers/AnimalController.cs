@@ -1,4 +1,5 @@
-﻿using Connect_ong_API.Core.Models;
+﻿using AutoMapper;
+using Connect_ong_API.Core.Models;
 using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,10 @@ namespace Connect_ong_API.Controllers {
     public class AnimalController : ControllerBase {
 
         private readonly IAnimalRepository _animalRepository;
-        public AnimalController(IAnimalRepository animalRepository) {
+        private readonly IMapper _mapper;
+        public AnimalController(IAnimalRepository animalRepository, IMapper mapper) {
             _animalRepository = animalRepository;
+            _mapper = mapper;
         }
 
         // GET: api/<AnimalController>
@@ -44,12 +47,13 @@ namespace Connect_ong_API.Controllers {
         // POST api/<AnimalController>
         [HttpPost]
         public async Task<IActionResult> CreateAnimal([FromBody] AnimalRequestView animalRequest) {
-            if(animalRequest == null) {
-                return BadRequest();
+            animalRequest.Validate();
+            if(!animalRequest.IsValid) {
+                return BadRequest(animalRequest.Notifications);
             }
             try {
-                await _animalRepository.PostAnimalAsync(animalRequest);
-                return Created("", animalRequest);
+                Animal animal = _mapper.Map<Animal>(animalRequest);
+                return Created("", await _animalRepository.PostAnimalAsync(animal));
             }
             catch (Exception e) {
                 return BadRequest(e.Message);
@@ -63,7 +67,8 @@ namespace Connect_ong_API.Controllers {
                 return BadRequest();
             }
             try {
-                await _animalRepository.PutAnimalAsync(id, animalRequest);
+                Animal animal = _mapper.Map<Animal>(animalRequest);
+                await _animalRepository.PutAnimalAsync(id, animal);
                 return NoContent();
             }
             catch (Exception e) {

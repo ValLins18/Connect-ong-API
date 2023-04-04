@@ -5,8 +5,8 @@ namespace Connect_ong_API.Data.Repository.Interface {
     public interface IAdoptionRepository {
         Task<Adoption> GetAdoptionByIdAsync(int id);
         Task<IEnumerable<Adoption>> GetAllAdoptionsAsync();
-        Task<AdoptionRequestView> PostAdoptionAsync(AdoptionRequestView adoptionRequest);
-        Task<AdoptionRequestView> PutAdoptionAsync(int id, AdoptionRequestView adoptionRequest);
+        Task<Adoption> PostAdoptionAsync(Adoption adoption);
+        Task<Adoption> PutAdoptionAsync(int id, Adoption adoption);
         Task<Adoption> DeleteAdoptionAsync(int id);
     }
 }

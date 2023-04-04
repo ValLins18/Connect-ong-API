@@ -30,19 +30,17 @@ namespace Connect_ong_API.Data.Repository.Implementation {
             return await _context.Donates.FirstOrDefaultAsync(d => d.DonateId == id);
         }
 
-        public async Task<DonateRequestView> PostDonateAsync(DonateRequestView donateRequest) {
-            Donate donate = _mapper.Map<Donate>(donateRequest);
+        public async Task<Donate> PostDonateAsync(Donate donate) {
             _context.Add(donate);
             await _context.SaveChangesAsync();
-            return donateRequest;
+            return donate;
         }
 
-        public async Task<DonateRequestView> PutDonateAsync(int id, DonateRequestView donateRequest) {
-            Donate donate = _mapper.Map<Donate>(donateRequest);
+        public async Task<Donate> PutDonateAsync(int id, Donate donate) {
             donate.DonateId = id;
             _context.Update(donate);
             await _context.SaveChangesAsync();
-            return donateRequest;
+            return donate;
         }
     }
 }

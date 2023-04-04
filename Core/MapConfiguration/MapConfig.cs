@@ -19,6 +19,12 @@ namespace Connect_ong_API.Core.MapConfiguration {
 
                 c.CreateMap<Adoption, AdoptionRequestView>();
                 c.CreateMap<AdoptionRequestView, Adoption>();
+
+                c.CreateMap<Phone, PhoneRequestView>();
+                c.CreateMap<PhoneRequestView, Phone>();
+
+                c.CreateMap<Address, AddressRequestView>();
+                c.CreateMap<AddressRequestView, Address>();
             });
             return mappingConfig;
         }
