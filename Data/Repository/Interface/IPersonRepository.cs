@@ -6,8 +6,8 @@ namespace Connect_ong_API.Data.Repository.Interface {
         Task<Person> GetPersonByIdAsync(int id);
         Task<Person> GetPersonsByCpfCnpjAsync(string cpfCnpj);
         Task<IEnumerable<Person>> GetAllPersonsAsync();
-        Task<PersonRequestView> PostPersonAsync(PersonRequestView personRequest);
-        Task<PersonRequestView> PutPersonAsync(int id, PersonRequestView personRequest);
+        Task<Person> PostPersonAsync(Person person);
+        Task<Person> PutPersonAsync(int id, Person person);
         Task<Person> DeletePersonAsync(int id);
 
     }

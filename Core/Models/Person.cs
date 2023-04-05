@@ -9,8 +9,8 @@
         public string PersonType { get; set; }
         public string Email { get; set; }
 
-        public int AdressId { get; set; }
-        public virtual Address Adress { get; set; }
+        public int AddressId { get; set; }
+        public virtual Address Address { get; set; }
 
         public int PhoneId { get; set; }
         public virtual Phone Phone { get; set; }

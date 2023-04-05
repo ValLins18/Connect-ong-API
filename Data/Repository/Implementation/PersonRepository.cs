@@ -23,38 +23,36 @@ namespace Connect_ong_API.Data.Repository.Implementation {
 
         public async Task<IEnumerable<Person>> GetAllPersonsAsync() {
             return await _context.Persons
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.Animals)
                 .Include(p => p.Phone).ToListAsync();
         }
 
         public async Task<Person> GetPersonByIdAsync(int id) {
             return await _context.Persons
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.Phone)
                 .Include(p => p.Animals).FirstOrDefaultAsync(p => p.PersonId == id);
         }
 
         public async Task<Person> GetPersonsByCpfCnpjAsync(string cpfCnpj) {
             return await _context.Persons
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.Animals)
                 .Include(p => p.Phone).FirstOrDefaultAsync(p => p.CpfCnpj == cpfCnpj);
         }
 
-        public async Task<PersonRequestView> PostPersonAsync(PersonRequestView personRequest) {
-            Person person = _mapper.Map<Person>(personRequest);
+        public async Task<Person> PostPersonAsync(Person person) {
             _context.Add(person);
             _ = await _context.SaveChangesAsync();
-            return personRequest;
+            return person;
         }
 
-        public async Task<PersonRequestView> PutPersonAsync(int id, PersonRequestView personRequest) {
-            Person person = _mapper.Map<Person>(personRequest);
+        public async Task<Person> PutPersonAsync(int id, Person person) {
             person.PersonId = id;
             _context.Update(person);
             _ = await _context.SaveChangesAsync();
-            return personRequest;
+            return person;
         }
     }
 }

@@ -8,7 +8,9 @@ namespace Connect_ong_API.Core.MapConfiguration {
 
         public static MapperConfiguration RegisterMaps() {
             var mappingConfig = new MapperConfiguration(c => {
-                c.CreateMap<PersonRequestView, Person>();
+                c.CreateMap<PersonRequestView, Person>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone));
                 c.CreateMap<Person, PersonRequestView> ();
 
                 c.CreateMap<Animal, AnimalRequestView>();

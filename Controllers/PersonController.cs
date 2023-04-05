@@ -1,4 +1,5 @@
-﻿using Connect_ong_API.Core.Models;
+﻿using AutoMapper;
+using Connect_ong_API.Core.Models;
 using Connect_ong_API.Core.ViewModels;
 using Connect_ong_API.Data.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,10 @@ namespace Connect_ong_API.Controllers {
     public class PersonController : ControllerBase {
 
         private readonly IPersonRepository _personRepository;
-        public PersonController(IPersonRepository personRepository) {
+        private readonly IMapper _mapper;
+        public PersonController(IPersonRepository personRepository, IMapper mapper) {
             _personRepository = personRepository;
+            _mapper = mapper;
         }
 
         // GET: api/<PersonController>
@@ -43,12 +46,13 @@ namespace Connect_ong_API.Controllers {
         // POST api/<PersonController>
         [HttpPost]
         public async Task<IActionResult> CreatePerson([FromBody] PersonRequestView personRequest) {
-            if (personRequest == null) {
-                return BadRequest();
+            personRequest.Validate();
+            if (!personRequest.IsValid) {
+                return BadRequest(personRequest.Notifications);
             }
-            try {
-                _ = await _personRepository.PostPersonAsync(personRequest);
-                return Created("", personRequest);
+            try {                
+                Person person = _mapper.Map<Person>(personRequest);
+                return Created("", await _personRepository.PostPersonAsync(person));
             }
             catch (Exception ex) {
                 return BadRequest(ex.Message);
@@ -58,11 +62,13 @@ namespace Connect_ong_API.Controllers {
         // PUT api/<PersonController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePerson(int id, [FromBody] PersonRequestView personRequest) {
-            if (personRequest == null) {
-                return BadRequest();
+            personRequest.Validate();
+            if (!personRequest.IsValid) {
+                return BadRequest(personRequest.Notifications);
             }
             try {
-                await _personRepository.PutPersonAsync(id, personRequest);
+                Person person = _mapper.Map<Person>(personRequest);
+                await _personRepository.PutPersonAsync(id, person);
                 return NoContent();
             }
             catch (Exception e) {
